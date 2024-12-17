@@ -7,11 +7,6 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
-  subscription_id = "137f0351-8235-42a6-ac7a-6b46be2d21c7"
-}
-
 resource "azurerm_resource_group" "aks_rg" {
   name     = "aks-resource-group"
   location = "East US"
@@ -35,9 +30,9 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "userpool" {
-  name                  = "userpool"
+  name                  = "userpool2"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
-  vm_size               = "Standard_DS2_v2"
+  vm_size               = "standard_d2a_v4"
   node_count            = 1
   mode                  = "User"
   max_pods              = 110
@@ -46,9 +41,4 @@ resource "azurerm_kubernetes_cluster_node_pool" "userpool" {
   node_labels = {
     "agentpool" = "userpool"
   }
-}
-
-output "kube_config" {
-  value = azurerm_kubernetes_cluster.aks_cluster.kube_config_raw
-  sensitive = true
 }
