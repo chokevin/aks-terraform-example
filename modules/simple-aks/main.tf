@@ -7,6 +7,11 @@ terraform {
   }
 }
 
+provider "azurerm" {
+  features {}
+  subscription_id = "137f0351-8235-42a6-ac7a-6b46be2d21c7"
+}
+
 resource "azurerm_resource_group" "aks_rg" {
   name     = "aks-resource-group"
   location = "East US"
